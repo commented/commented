@@ -1,0 +1,27 @@
+{
+  "name": "commented",
+  "version": "0.0.0",
+  "description": "Comments, done easy.",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/commented/commented.git"
+  },
+  "keywords": [
+    "comments",
+    "api",
+    "nobackend"
+  ],
+  "author": "Jared Forsyth @jaredly",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/commented/commented/issues"
+  },
+  "homepage": "https://github.com/commented/commented",
+  "dependencies": {
+    "hellojs": "^0.2.5"
+  }
+}
