@@ -115,7 +115,7 @@ var Comment = React.createClass({
         canVote: this.props.canVote,
         data: this.props.data,
         isReply: this.props.isReply,
-        hasReplies: this.props.replies && this.props.replies.length,
+        hasReplies: this.state.replying || this.props.replies && this.props.replies.length,
         userid: this.props.userid,
         parentDeleted: this.props.parentDeleted,
 

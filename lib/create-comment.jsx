@@ -5,6 +5,7 @@ var CommentDisplay = require('./comment-display.jsx')
 var CreateComment = React.createClass({
   propTypes: {
     onHide: React.PropTypes.func.isRequired,
+    target: React.PropTypes.string.isRequired,
     db: React.PropTypes.object.isRequired,
     user: React.PropTypes.object.isRequired
   },
@@ -16,7 +17,7 @@ var CreateComment = React.createClass({
 
   _onSubmit: function (text) {
     if (!text) return
-    this.props.db.addComment(text, 'main', false)
+    this.props.db.addComment(text, this.props.target, false)
     this.props.onHide()
   },
 
