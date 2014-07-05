@@ -41,7 +41,7 @@ var MainComments = React.createClass({
   renderComments: function () {
     if (!this.state.comments.length) {
       if (this.state.loading) {
-        return <span>Loading...</span>
+        return <span><i className="fa fa-spin fa-spinner"/> Loading...</span>
       }
       return null
     }
@@ -57,6 +57,8 @@ var MainComments = React.createClass({
       return Comment({
         key: comment._id,
         canEdit: this.state.user && this.state.user.uid == comment.userid,
+        canVote: !!this.state.user,
+        userid: this.state.user && this.state.user.uid,
         db: this.props.db,
         data: comment
       })

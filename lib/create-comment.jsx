@@ -1,4 +1,7 @@
 
+var AutoTextarea = require('./auto-textarea.jsx')
+var CommentDisplay = require('./comment-display.jsx')
+
 var CreateComment = React.createClass({
   propTypes: {
     onHide: React.PropTypes.func.isRequired,
@@ -10,22 +13,26 @@ var CreateComment = React.createClass({
       text: ''
     }
   },
-  _onChange: function (e) {
-    this.setState({text: e.target.value})
-  },
-  _onSubmit: function () {
-    this.props.db.addComment(this.state.text, 'main', false)
-    this.setState({text: ''})
+
+  _onSubmit: function (text) {
+    if (!text) return
+    this.props.db.addComment(text, 'main', false)
     this.props.onHide()
   },
+
   render: function () {
-    return <div className="commented_create">
-      <img className="commented_pic" src={this.props.user.picture}/>
-      <div className="right">
-        <textarea value={this.state.text} onChange={this._onChange}/>
-        <button onClick={this._onSubmit}>Add</button>
-      </div>
-    </div>;
+    return CommentDisplay({
+      canEdit: true,
+      editing: true,
+      data: {
+        picture: this.props.user.picture,
+        displayName: this.props.user.displayName,
+        text: '',
+      },
+
+      doneEditing: this._onSubmit,
+      onRemove: this.props.onHide
+    })
   }
 });
 

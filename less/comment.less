@@ -1,9 +1,30 @@
 
 @import (reference) "./mixins.less";
 
+.auto-textarea {
+  display: block;
+  overflow: hidden;
+  resize: none;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 5px 0;
+  // border-radius: 2px;
+  // box-shadow: 0 0 2px #ccc;
+  min-height: 36px;
+  font-size: 14px;
+  font-family: sans-serif;
+  border: none;
+  color: #777;
+
+  &:focus {
+    outline: none;
+  }
+}
+
 .commented_main {
   font-family: sans-serif;
-  width: 400px;
+  width: 600px;
   margin: 0 auto;
 }
 
@@ -23,9 +44,61 @@
   }
 }
 
+.commented_done-edit {
+  color: green;
+}
+
+.commented_buttons {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #ccc;
+
+  span {
+    visibility: hidden;
+    cursor: pointer;
+    padding: 5px;
+
+    &:hover {
+      color: black;
+    }
+
+    .commented_comment--editing &,
+    .commented_comment:hover & {
+      visibility: visible;
+    }
+  }
+
+  span.commented_down--active {
+    color: red;
+    visibility: visible;
+  }
+
+  span.commented_up--active {
+    color: green;
+    visibility: visible;
+  }
+
+  span.commented_flag--active {
+    color: red;
+    visibility: visible;
+  }
+}
+
 .commented_comment {
   font-size: 14px;
+  line-height: 1.5;
   display: flex;
+  position: relative;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  margin-top: 20px;
+
+  .display-time {
+    margin-left: 10px;
+    color: #bbb;
+    font-size: 12px;
+  }
 
   .right {
     margin-left: 10px;
