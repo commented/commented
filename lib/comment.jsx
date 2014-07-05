@@ -11,7 +11,8 @@ var Comment = React.createClass({
 
   getInitialState: function () {
     return {
-      editing: false
+      editing: false,
+      replying: false,
     }
   },
 
@@ -21,6 +22,11 @@ var Comment = React.createClass({
 
   onEdit: function () {
     this.setState({editing: true})
+  },
+
+  onReply: function () {
+    if (this.props.isReply) return
+    this.setState({editing: false, replying: true});
   },
 
   onClearVote: function () {
@@ -46,22 +52,75 @@ var Comment = React.createClass({
     this.setState({editing: false})
   },
 
-  render: function () {
-    return CommentDisplay({
-      editing: this.state.editing,
-      canEdit: this.props.canEdit,
-      canVote: this.props.canVote,
-      data: this.props.data,
-      userid: this.props.userid,
+  doneReplying: function (text) {
+    if (!this.state.replying) return
+    if (!text) return
+    this.props.db.addComment(text, "reply:" + this.props.data._id, '')
+    this.setState({replying: false})
+  },
 
-      onEdit: this.onEdit,
-      onFlag: this.onFlag,
-      doneEditing: this.doneEditing,
-      onRemove: this.onRemove,
-      onUpvote: this.onUpvote,
-      onDownvote: this.onDownvote,
-      onClearVote: this.onClearVote
-    })
+  cancelReply: function () {
+    this.setState({replying: false})
+  },
+  
+  renderReplies: function () {
+    var replies = this.props.replies
+    if (!replies.length && !this.state.replying) {
+      return false
+    }
+    var user = this.props.user
+    return <div className="commented_replies">
+      {replies.map(function (comment) {
+        return Comment({
+          key: comment._id,
+          isReply: true,
+          replies: [],
+          canEdit: user && user.uid == comment.userid,
+          canVote: !!user,
+          userid: user && user.uid,
+          data: comment,
+          user: user,
+          db: db,
+        })
+      }.bind(this))}
+      {this.state.replying && CommentDisplay({
+        editing: true,
+        canEdit: true,
+        canVote: false,
+        data: {
+          picture: this.props.user.picture,
+          displayName: this.props.user.displayName,
+          text: ''
+        },
+        userid: this.props.userid,
+        isReply: true,
+
+        doneEditing: this.doneReplying,
+        onRemove: this.cancelReply
+      })}
+  },
+
+  render: function () {
+    return <div className="commented_one">
+      {CommentDisplay({
+        editing: this.state.editing,
+        canEdit: this.props.canEdit,
+        canVote: this.props.canVote,
+        data: this.props.data,
+        isReply: this.props.isReply,
+        userid: this.props.userid,
+
+        onEdit: this.onEdit,
+        onFlag: this.onFlag,
+        onReply: !this.props.isReply && this.onReply,
+        onRemove: this.onRemove,
+        onUpvote: this.onUpvote,
+        onDownvote: this.onDownvote,
+        onClearVote: this.onClearVote,
+        doneEditing: this.doneEditing,
+      })}
+      {this.renderReplies()}
+    </div>
   }
 });
 

@@ -19,7 +19,9 @@ var AddComment = React.createClass({
   },
   render: function () {
     if (!this.state.adding) {
-      return <div onClick={this.onShow}>Add a comment</div>
+      return <div className="add-comment" onClick={this.onShow}>
+        Add a comment
+      </div>
     }
     if (!this.props.user) {
       return <Login db={this.props.db} auth={this.props.auth}/>

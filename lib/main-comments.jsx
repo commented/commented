@@ -38,35 +38,72 @@ var MainComments = React.createClass({
     })
   },
 
+  organizeComments: function () {
+    var ids = Object.keys(this.state.comments)
+      , comments = this.state.comments
+      , showAll = this.state.showAll
+      , inlines = 0
+      , replies = []
+      , map = {}
+      , list = []
+
+    ids.forEach(function (id) {
+      var item = {
+        comment: comments[id],
+        replies: []
+      }
+      var target = comments[id].target
+      map[id] = item
+      if (target === 'main') {
+        list.push(item)
+      } else if (target.indexOf('inline:') === 0) {
+        inlines += 1
+        if (showAll) list.push(item)
+      } else if (target.indexOf('reply:') === 0) {
+        replies.push(comments[id])
+      }
+    })
+
+    replies.forEach(function (comment) {
+      var parent = comment.target.slice('reply:'.length)
+      map[parent].replies.push(comment)
+    });
+
+    return {
+      list: list,
+      inlines: inlines
+    }
+  },
+
   renderComments: function () {
-    if (!this.state.comments.length) {
+    if (!Object.keys(this.state.comments).length) {
       if (this.state.loading) {
         return <span><i className="fa fa-spin fa-spinner"/> Loading...</span>
       }
       return null
     }
-    var showAll = this.state.showAll
-    var skipping = 0
-    var comments = this.state.comments.map(function (comment) {
-      if (comment.target !== 'main') {
-        skipping += 1
-        if (!showAll) {
-          return
-        }
-      }
+
+    var organized = this.organizeComments()
+    var user = this.state.user
+    var db = this.props.db
+
+    var comments = organized.list.map(function (item) {
       return Comment({
-        key: comment._id,
-        canEdit: this.state.user && this.state.user.uid == comment.userid,
-        canVote: !!this.state.user,
-        userid: this.state.user && this.state.user.uid,
-        db: this.props.db,
-        data: comment
+        key: item.comment._id,
+        replies: item.replies,
+        canEdit: user && user.uid == item.comment.userid,
+        canVote: !!user,
+        userid: user && user.uid,
+        data: item.comment,
+        user: user,
+        db: db,
       })
     }.bind(this))
+
     return <div className="commented_comments">
-      {skipping ? ShowAller({
-        count: skipping,
-        showAll: showAll,
+      {organized.inlines ? ShowAller({
+        count: organized.inlines,
+        showAll: this.state.showAll,
         onChange: this._onChangeShow
       }) : false}
       {comments}

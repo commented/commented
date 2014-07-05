@@ -8,11 +8,13 @@ var CommentDisplay = React.createClass({
     editing: React.PropTypes.bool.isRequired,
     canEdit: React.PropTypes.bool.isRequired,
     data: React.PropTypes.object.isRequired,
+    isReply: React.PropTypes.bool,
 
     onEdit: React.PropTypes.func,
     doneEditing: React.PropTypes.func,
     onRemove: React.PropTypes.func,
 
+    onReply: React.PropTypes.func,
     onUpvote: React.PropTypes.func,
     onDownvote: React.PropTypes.func,
     onClearVote: React.PropTypes.func,
@@ -33,45 +35,66 @@ var CommentDisplay = React.createClass({
     this.setState({text: e.target.value});
   },
 
-  voteButtons: function () {
-    if (!this.props.canVote) return
-    var upVoted = false
-      , downVoted = false
-      , flagged = this.props.data.flags && this.props.data.flags[this.props.userid]
+  getVotes: function () {
+    var votes = {
+      up: false,
+      upCount: 0,
+      down: false,
+      downCount: 0,
+      flagged: this.props.data.flags && this.props.data.flags[this.props.userid]
+    }
 
     switch (this.props.data.votes && this.props.data.votes[this.props.userid]) {
       case true:
-        upVoted = true; break;
+        votes.up = true; break;
       case false:
-        downVoted = true; break;
+        votes.down = true; break;
       default: break;
     }
+    for (var id in this.props.data.votes) {
+      if (this.props.data.votes[id]) {
+        votes.upCount += 1
+      } else {
+        votes.downCount += 1
+      }
+    }
+    return votes
+  },
+
+  voteButtons: function () {
+    if (!this.props.canVote) return
+    var votes = this.getVotes()
 
     return <div className='commented_buttons'>
       <span
-        onClick={this.props.onFlag.bind(null, !flagged)}
+        onClick={this.props.onFlag.bind(null, !votes.flagged)}
         className={cx({
-          "commented_flag": true,
-          "commented_flag--active": flagged
+          "button commented_flag": true,
+          "commented_flag--active": votes.flagged
         })}>
         <i className="fa fa-flag"/>
       </span>
       <span
-        onClick={downVoted ? this.props.onClearVote : this.props.onDownvote}
+        onClick={votes.down ? this.props.onClearVote : this.props.onDownvote}
         className={cx({
-          "commented_down": true,
-          "commented_down--active": downVoted
+          "button commented_down": true,
+          "commented_down--shown shown": !!votes.downCount,
+          "commented_down--active active": votes.down
         })}>
+        <span className="count">{votes.downCount}</span>
         <i className="fa fa-thumbs-o-down"/>
       </span>
       <span
-        onClick={upVoted ? this.props.onClearVote : this.props.onUpvote}
+        onClick={votes.up ? this.props.onClearVote : this.props.onUpvote}
         className={cx({
-          "commented_up": true,
-          "commented_up--active": upVoted
+          "button commented_up": true,
+          "commented_up--shown shown": !!votes.upCount,
+          "commented_up--active active": votes.up
         })}>
+        <span className="count">{votes.upCount}</span>
         <i className="fa fa-thumbs-o-up"/>
       </span>
+      <span onClick={this.props.onReply} className="commented_reply">reply</span>
     </div>;
   },
 
@@ -81,21 +104,23 @@ var CommentDisplay = React.createClass({
     }
     return <div className='commented_buttons'>
       {this.props.editing ?
-        <span onClick={this.doneEditing} className="commented_done-edit">
+        <span onClick={this.doneEditing} className="commented_done-edit button">
           <i className="fa fa-check"/>
         </span> :
-        <span onClick={this.props.onEdit} className="commented_edit">
+        <span onClick={this.props.onEdit} className="commented_edit button">
           <i className="fa fa-pencil"/>
         </span>}
-      <span onClick={this.props.onRemove} className="commented_remove">
+      <span onClick={this.props.onRemove} className="commented_remove button">
         <i className="fa fa-times"/>
       </span>
+      <span onClick={this.props.onReply} className="commented_reply">reply</span>
     </div>;
   },
 
   body: function () {
     if (!this.props.editing) return format(this.props.data.text, "text")
     return <AutoTextarea
+      placeholder="Type your comment here"
       onChange={this.onChange}
       value={this.state.text}/>
   },
@@ -106,6 +131,10 @@ var CommentDisplay = React.createClass({
     if (this.props.editing) {
       cls += ' commented_comment--editing'
     }
+    if (this.props.isReply) {
+      cls += ' commented_comment--reply'
+    }
+
     return <div className={cls}>
       <img className="commented_pic" src={comment.picture}/>
       <div className="right">

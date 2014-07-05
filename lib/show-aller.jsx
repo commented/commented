@@ -1,6 +1,7 @@
 
 var ShowAller = React.createClass({
   propTypes: {
+    skipped: React.PropTypes.number
   },
   render: function () {
     var show = this.props.showAll
@@ -8,7 +9,7 @@ var ShowAller = React.createClass({
       <button
           className="commented_show-aller_btn"
           onClick={this.props.onChange.bind(null, !show)}>
-        {show ? 'Hide' : 'Show'} {skipped} side comments
+        {show ? 'Hide' : 'Show'} {this.props.count} side comments
       </button>
     </div>;
   }

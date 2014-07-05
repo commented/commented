@@ -1,6 +1,8 @@
 
 @import (reference) "./mixins.less";
 
+@green: rgb(0, 156, 25);
+
 .auto-textarea {
   display: block;
   overflow: hidden;
@@ -24,8 +26,10 @@
 
 .commented_main {
   font-family: sans-serif;
-  width: 600px;
-  margin: 0 auto;
+  width: 700px;
+  margin: 30px auto;
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 
 .commented_pic {
@@ -45,16 +49,36 @@
 }
 
 .commented_done-edit {
-  color: green;
+  color: @green;
+}
+
+.commented_reply {
+  color: @green;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.commented_comment--reply {
+  margin-left: 26px;
 }
 
 .commented_buttons {
   position: absolute;
-  top: 0;
-  right: 0;
+  bottom: 5px;
+  right: 5px;
   color: #ccc;
 
-  span {
+  .count {
+    padding-right: 5px;
+    visibility: hidden;
+    
+  }
+
+  .shown .count {
+    visibility: visible;
+  }
+
+  .button {
     visibility: hidden;
     cursor: pointer;
     padding: 5px;
@@ -69,27 +93,43 @@
     }
   }
 
-  span.commented_down--active {
+  .commented_up--active {
+    color: @green;
+  }
+
+  .commented_down--active {
+    color: red;
+  }
+
+  .shown {
+    visibility: visible;
+  }
+
+  .commented_flag--active {
     color: red;
     visibility: visible;
   }
 
-  span.commented_up--active {
-    color: green;
-    visibility: visible;
+  .commented_edit {
+    &:hover {
+      color: @green;
+    }
   }
 
-  span.commented_flag--active {
-    color: red;
-    visibility: visible;
+  .commented_remove {
+    &:hover {
+      color: red;
+    }
   }
 }
+
 
 .commented_comment {
   font-size: 14px;
   line-height: 1.5;
   display: flex;
   position: relative;
+
   padding-bottom: 15px;
   border-bottom: 1px solid #ddd;
   margin-top: 20px;
@@ -115,5 +155,45 @@
       margin-bottom: 0;
     }
   }
+}
+
+.add-comment {
+  margin-top: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #777;
+
+  &:hover {
+    color: @green;
+  }
+
+  &:before {
+    content: '+';
+    border-radius: 20px;
+    padding: 0 7px 2px;
+    display: inline-block;
+    margin-left: 4px;
+    margin-right: 13px;
+    font-size: 22px;
+    font-weight: normal;
+  }
+
+  /*
+  .plus {
+
+  }
+  .fa-stack {
+    font-size: 24px;
+    color: #aaa;
+    line-height: 32px;
+    margin-left: 8px;
+    margin-right: 10px;
+  }
+
+  .text {
+    display: inline-block;
+    margin-top: -8px;
+  }
+  */
 }
 
