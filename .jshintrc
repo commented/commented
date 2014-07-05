@@ -7,6 +7,10 @@
   "globals": {
     "marked": false,
     "Promise": false,
+    "React": false,
+    "Firebase": false,
+    "FirebaseSimpleLogin": false,
+    "moment": false,
     "_": false
   },
   "node": true,

@@ -48,6 +48,7 @@ var MainComments = React.createClass({
       , list = []
 
     ids.forEach(function (id) {
+      if (!comments[id]) return
       var item = {
         comment: comments[id],
         replies: []
@@ -66,6 +67,11 @@ var MainComments = React.createClass({
 
     replies.forEach(function (comment) {
       var parent = comment.target.slice('reply:'.length)
+      if (!map[parent]) {
+        // this is in reply to a comment that was deleted...
+        list.push({comment: comment, parentDeleted: true, replies: []})
+        return
+      }
       map[parent].replies.push(comment)
     });
 
@@ -73,6 +79,10 @@ var MainComments = React.createClass({
       list: list,
       inlines: inlines
     }
+  },
+
+  _onLogin: function (user) {
+    this.setState({user: user})
   },
 
   renderComments: function () {
@@ -91,6 +101,7 @@ var MainComments = React.createClass({
       return Comment({
         key: item.comment._id,
         replies: item.replies,
+        parentDeleted: item.parentDeleted,
         canEdit: user && user.uid == item.comment.userid,
         canVote: !!user,
         userid: user && user.uid,
@@ -108,10 +119,6 @@ var MainComments = React.createClass({
       }) : false}
       {comments}
     </div>;
-  },
-
-  _onLogin: function (user) {
-    this.setState({user: user})
   },
 
   render: function () {

@@ -30,6 +30,7 @@ var CreateComment = React.createClass({
         text: '',
       },
 
+      cancelEdit: this.props.onHide,
       doneEditing: this._onSubmit,
       onRemove: this.props.onHide
     })

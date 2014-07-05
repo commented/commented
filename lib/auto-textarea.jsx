@@ -1,7 +1,7 @@
 
 var AutoTextarea = React.createClass({
   componentDidMount: function () {
-    node = this.getDOMNode()
+    var node = this.getDOMNode()
     node.style.height = 'auto'
     node.style.height = node.scrollHeight + 'px'
     node.style.scrollTop = node.scrollHeight

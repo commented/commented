@@ -58,14 +58,10 @@
   margin-left: 5px;
 }
 
-.commented_comment--reply {
-  margin-left: 26px;
-}
-
 .commented_buttons {
   position: absolute;
-  bottom: 5px;
-  right: 5px;
+  bottom: 3px;
+  right: 8px;
   color: #ccc;
 
   .count {
@@ -134,6 +130,16 @@
   border-bottom: 1px solid #ddd;
   margin-top: 20px;
 
+  &.commented_comment--has-replies {
+    border-bottom: none;
+  }
+
+  .parent-deleted {
+    color: #9C0000;
+    margin-left: 10px;
+    font-size: 12px;
+  }
+
   .display-time {
     margin-left: 10px;
     color: #bbb;
@@ -154,6 +160,31 @@
     p:last-child {
       margin-bottom: 0;
     }
+  }
+}
+
+.commented_comment--flagged {
+  .fa-circle {
+    color: #ccc;
+  }
+
+  .display-name {
+    color: #AC6464;
+    margin-left: 10px;
+    margin-top: 8px;
+  }
+}
+
+.commented_replies > .commented_one:first-child .commented_comment {
+  margin-top: 0;
+}
+
+.commented_comment--reply {
+  margin-left: 45px;
+  margin-top: 0;
+
+  .commented_one:not(:last-child) > & {
+    border-bottom: none;
   }
 }
 

@@ -45,6 +45,10 @@ var Comment = React.createClass({
     this.props.db.flag(this.props.data._id, this.props.userid, flag)
   },
 
+  cancelEdit: function () {
+    this.setState({editing: false})
+  },
+
   doneEditing: function (text) {
     if (!this.state.editing) return
     if (!text) return
@@ -62,7 +66,7 @@ var Comment = React.createClass({
   cancelReply: function () {
     this.setState({replying: false})
   },
-  
+
   renderReplies: function () {
     var replies = this.props.replies
     if (!replies.length && !this.state.replying) {
@@ -80,7 +84,7 @@ var Comment = React.createClass({
           userid: user && user.uid,
           data: comment,
           user: user,
-          db: db,
+          db: this.props.db,
         })
       }.bind(this))}
       {this.state.replying && CommentDisplay({
@@ -95,9 +99,11 @@ var Comment = React.createClass({
         userid: this.props.userid,
         isReply: true,
 
+        cancelEdit: this.cancelReply,
         doneEditing: this.doneReplying,
         onRemove: this.cancelReply
       })}
+    </div>
   },
 
   render: function () {
@@ -108,7 +114,9 @@ var Comment = React.createClass({
         canVote: this.props.canVote,
         data: this.props.data,
         isReply: this.props.isReply,
+        hasReplies: this.props.replies && this.props.replies.length,
         userid: this.props.userid,
+        parentDeleted: this.props.parentDeleted,
 
         onEdit: this.onEdit,
         onFlag: this.onFlag,
@@ -118,6 +126,7 @@ var Comment = React.createClass({
         onDownvote: this.onDownvote,
         onClearVote: this.onClearVote,
         doneEditing: this.doneEditing,
+        cancelEdit: this.cancelEdit,
       })}
       {this.renderReplies()}
     </div>

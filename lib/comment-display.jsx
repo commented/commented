@@ -27,6 +27,11 @@ var CommentDisplay = React.createClass({
     }
   },
 
+  cancelEdit: function () {
+    this.setState({text: this.props.data.text})
+    this.props.cancelEdit()
+  },
+
   doneEditing: function () {
     this.props.doneEditing(this.state.text)
   },
@@ -41,7 +46,8 @@ var CommentDisplay = React.createClass({
       upCount: 0,
       down: false,
       downCount: 0,
-      flagged: this.props.data.flags && this.props.data.flags[this.props.userid]
+      flagged: this.props.data.flags && this.props.data.flags[this.props.userid],
+      flagCount: 0
     }
 
     switch (this.props.data.votes && this.props.data.votes[this.props.userid]) {
@@ -58,12 +64,16 @@ var CommentDisplay = React.createClass({
         votes.downCount += 1
       }
     }
+    for (var id in this.props.data.flags) {
+      if (this.props.data.flags[id]) {
+        votes.flagCount += 1
+      }
+    }
     return votes
   },
 
-  voteButtons: function () {
+  voteButtons: function (votes) {
     if (!this.props.canVote) return
-    var votes = this.getVotes()
 
     return <div className='commented_buttons'>
       <span
@@ -94,31 +104,43 @@ var CommentDisplay = React.createClass({
         <span className="count">{votes.upCount}</span>
         <i className="fa fa-thumbs-o-up"/>
       </span>
-      <span onClick={this.props.onReply} className="commented_reply">reply</span>
+      {!this.props.isReply && <span onClick={this.props.onReply} className="commented_reply">reply</span>}
     </div>;
   },
 
-  buttons: function () {
+  editButtons: function () {
+    return <div className="commented_buttons">
+      <span onClick={this.doneEditing} className="commented_done-edit button">
+        save
+      </span>
+      <span onClick={this.cancelEdit} className="commented_remove button">
+        cancel
+      </span>
+    </div>
+  },
+
+  buttons: function (votes) {
     if (!this.props.canEdit) {
-      return this.voteButtons()
+      return this.voteButtons(votes)
+    }
+    if (this.props.editing) {
+      return this.editButtons()
     }
     return <div className='commented_buttons'>
-      {this.props.editing ?
-        <span onClick={this.doneEditing} className="commented_done-edit button">
-          <i className="fa fa-check"/>
-        </span> :
-        <span onClick={this.props.onEdit} className="commented_edit button">
-          <i className="fa fa-pencil"/>
-        </span>}
+      <span onClick={this.props.onEdit} className="commented_edit button">
+        <i className="fa fa-pencil"/>
+      </span>
       <span onClick={this.props.onRemove} className="commented_remove button">
         <i className="fa fa-times"/>
       </span>
-      <span onClick={this.props.onReply} className="commented_reply">reply</span>
+      {!this.props.isReply && <span onClick={this.props.onReply} className="commented_reply">reply</span>}
     </div>;
   },
 
   body: function () {
-    if (!this.props.editing) return format(this.props.data.text, "text")
+    if (!this.props.editing) {
+      return format(this.props.data.text, "text")
+    }
     return <AutoTextarea
       placeholder="Type your comment here"
       onChange={this.onChange}
@@ -134,14 +156,32 @@ var CommentDisplay = React.createClass({
     if (this.props.isReply) {
       cls += ' commented_comment--reply'
     }
+    if (this.props.hasReplies) {
+      cls += ' commented_comment--has-replies'
+    }
+
+    var votes = this.getVotes()
+    if (votes.flagCount > 2 && this.props.userid !== this.props.data.userid) {
+      return <div className={cls + " commented_comment--flagged"}>
+        <span className="commented_pic fa-stack fa-lg">
+          <i className="fa fa-circle fa-stack-2x"></i>
+          <i className="fa fa-flag fa-stack-1x fa-inverse"></i>
+        </span>
+        <span className="display-name">
+          flagged comment hidden
+        </span>
+      </div>
+    }
 
     return <div className={cls}>
       <img className="commented_pic" src={comment.picture}/>
       <div className="right">
-        {this.buttons()}
+        {this.buttons(votes)}
         <strong className="display-name">{comment.displayName}</strong>
         {comment.created && // TODO have this time auto-update
           <span className="display-time">{moment(comment.created).fromNow()}</span>}
+        {this.props.parentDeleted &&
+          <span className="parent-deleted">in reply to a deleted comment</span>}
         {this.body()}
       </div>
     </div>;
