@@ -1,0 +1,46 @@
+
+@import (reference) "./mixins.less";
+
+.commented_main {
+  font-family: sans-serif;
+  width: 400px;
+  margin: 0 auto;
+}
+
+.commented_pic {
+  width: 35px;
+  height: 35px;
+  border-radius: 24px;
+}
+
+.commented_create {
+  font-size: 14px;
+  display: flex;
+
+  .right {
+    margin-left: 10px;
+    flex: 1;
+  }
+}
+
+.commented_comment {
+  font-size: 14px;
+  display: flex;
+
+  .right {
+    margin-left: 10px;
+    flex: 1;
+  }
+
+  .text {
+    margin: 5px 0 10px;
+
+    p:first-child {
+      margin-top: 0;
+    }
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+

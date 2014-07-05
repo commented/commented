@@ -1,2 +1,5 @@
 server
 node_modules
+manual_server
+web/commented.js
+web/build.css
