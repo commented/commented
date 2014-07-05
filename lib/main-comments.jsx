@@ -126,6 +126,7 @@ var MainComments = React.createClass({
       {this.renderComments()}
       <div className="commented_add">
         <AddComment
+          target="main"
           user={this.state.user}
           auth={this.props.auth}
           db={this.props.db}/>

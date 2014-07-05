@@ -153,6 +153,9 @@ var CommentDisplay = React.createClass({
     if (this.props.editing) {
       cls += ' commented_comment--editing'
     }
+    if (this.props.canEdit) {
+      cls += ' commented_comment--mine'
+    }
     if (this.props.isReply) {
       cls += ' commented_comment--reply'
     }

@@ -29,6 +29,7 @@ var AddComment = React.createClass({
     }
     return <CreateComment
       onHide={this.onHide}
+      target={this.props.target}
       db={this.props.db}
       user={this.props.user}/>
   }
