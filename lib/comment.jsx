@@ -87,7 +87,7 @@ var Comment = React.createClass({
           db: this.props.db,
         })
       }.bind(this))}
-      {this.state.replying && CommentDisplay({
+      {this.state.replying && user && CommentDisplay({
         editing: true,
         canEdit: true,
         canVote: false,
@@ -96,6 +96,7 @@ var Comment = React.createClass({
           displayName: this.props.user.displayName,
           text: ''
         },
+        onLogout: this.props.db.logout.bind(this.props.db),
         userid: this.props.userid,
         isReply: true,
         creating: true,
@@ -114,14 +115,16 @@ var Comment = React.createClass({
         canEdit: this.props.canEdit,
         canVote: this.props.canVote,
         data: this.props.data,
+        db: this.props.db,
         isReply: this.props.isReply,
-        hasReplies: this.state.replying || this.props.replies && this.props.replies.length,
+        hasReplies: (this.props.userid && this.state.replying) || this.props.replies && this.props.replies.length,
         userid: this.props.userid,
         parentDeleted: this.props.parentDeleted,
 
         onEdit: this.onEdit,
         onFlag: this.onFlag,
         onReply: !this.props.isReply && this.onReply,
+        cancelReply: this.cancelReply,
         onLogout: this.props.db.logout.bind(this.props.db),
         onRemove: this.onRemove,
         onUpvote: this.onUpvote,

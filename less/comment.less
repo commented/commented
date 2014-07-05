@@ -206,12 +206,14 @@
   cursor: pointer;
   color: #777;
   background-color: white;
+  border: 1px solid white;
+  border-radius: 10px;
 
-  -webkit-transition: background-color .2s ease, color .2s;
+  -webkit-transition: border-color .2s ease, color .2s;
 
   &:hover {
     color: @green;
-    background-color: #E5F7E1;
+    border-color: @lightGreen;
   }
 
   &:before {

@@ -11,6 +11,10 @@
     opacity: .4;
     cursor: pointer;
 
+    &:focus {
+      outline: none;
+    }
+
     &:hover {
       opacity: 1;
     }
@@ -19,6 +23,11 @@
 
 .commented_login--loading {
   font-size: 12px;
+  line-height: 25px;
+
+  i {
+    margin-left: 10px;
+  }
 }
 
 .commented_login-type--github {
@@ -43,6 +52,11 @@
   .fa-circle {
     color: red;
   }
+}
+
+.commented_login-type--cancel {
+  padding: 10px;
+  margin-left: -5px;
 }
 
 .commented_logout {

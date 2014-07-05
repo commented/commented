@@ -10,7 +10,8 @@ var Login = React.createClass({
   propTypes: {
     db: React.PropTypes.object.isRequired,
     auth: React.PropTypes.array.isRequired,
-    onLogin: React.PropTypes.func.isRequired
+    onLogin: React.PropTypes.func.isRequired,
+    onCancel: React.PropTypes.func.isRequired
   },
 
   getInitialState: function () {
@@ -55,6 +56,9 @@ var Login = React.createClass({
           </span>
         </button>;
       }.bind(this))}
+      <button className="commented_login-type commente_login-type--cancel"
+        onClick={this.props.onCancel}>&times;
+      </button>
     </div>;
   }
 });

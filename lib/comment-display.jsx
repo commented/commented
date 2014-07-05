@@ -1,6 +1,7 @@
 
 var format = require('./format')
   , AutoTextarea = require('./auto-textarea.jsx')
+  , ReplyLogin = require('./reply-login.jsx')
   , cx = React.addons.classSet
 
 var CommentDisplay = React.createClass({
@@ -119,7 +120,21 @@ var CommentDisplay = React.createClass({
     </div>
   },
 
+  replyLogin: function () {
+    if (this.props.isReply) return false
+    return <div className="commented_buttons">
+      <ReplyLogin
+        db={this.props.db}
+        auth={this.props.db.options.auth}
+        onCancel={this.props.cancelReply}
+        onReply={this.props.onReply}/>
+    </div>
+  },
+
   buttons: function (votes) {
+    if (!this.props.userid) {
+      return this.replyLogin()
+    }
     if (!this.props.canEdit) {
       return this.voteButtons(votes)
     }

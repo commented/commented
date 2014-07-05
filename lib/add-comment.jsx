@@ -25,7 +25,7 @@ var AddComment = React.createClass({
       </div>
     }
     if (!this.props.user) {
-      return <Login db={this.props.db} auth={this.props.auth}/>
+      return <Login db={this.props.db} auth={this.props.auth} onCancel={this.onHide}/>
     }
     return <CreateComment
       onHide={this.onHide}

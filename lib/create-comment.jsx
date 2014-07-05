@@ -31,6 +31,7 @@ var CreateComment = React.createClass({
         displayName: this.props.user.displayName,
         text: '',
       },
+      userid: this.props.user.uid,
 
       onLogout: this.props.db.logout.bind(this.props.db),
       cancelEdit: this.props.onHide,
