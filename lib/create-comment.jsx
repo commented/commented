@@ -24,12 +24,14 @@ var CreateComment = React.createClass({
     return CommentDisplay({
       canEdit: true,
       editing: true,
+      creating: true,
       data: {
         picture: this.props.user.picture,
         displayName: this.props.user.displayName,
         text: '',
       },
 
+      onLogout: this.props.db.logout.bind(this.props.db),
       cancelEdit: this.props.onHide,
       doneEditing: this._onSubmit,
       onRemove: this.props.onHide

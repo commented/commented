@@ -2,6 +2,7 @@
 @import (reference) "./mixins.less";
 
 @green: rgb(0, 156, 25);
+@green: #3b9226;
 
 .auto-textarea {
   display: block;
@@ -52,15 +53,20 @@
   color: @green;
 }
 
+@lightGreen: #baeaae;
+
 .commented_reply {
-  color: @green;
+  color: @lightGreen;
   cursor: pointer;
   margin-left: 5px;
+  .commented_comment:hover & {
+    color: @green;
+  }
 }
 
 .commented_buttons {
   position: absolute;
-  bottom: 3px;
+  bottom: 5px;
   right: 8px;
   color: #ccc;
 
@@ -152,7 +158,7 @@
   }
 
   .text {
-    margin: 5px 0 10px;
+    margin: 5px 0 13px;
 
     p:first-child {
       margin-top: 0;
@@ -193,9 +199,14 @@
   font-size: 14px;
   cursor: pointer;
   color: #777;
+  background-color: white;
+  border-radius: 10px;
+
+  -webkit-transition: background-color .2s ease, color .2s;
 
   &:hover {
     color: @green;
+    background-color: @lightGreen;
   }
 
   &:before {

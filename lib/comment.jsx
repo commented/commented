@@ -98,6 +98,7 @@ var Comment = React.createClass({
         },
         userid: this.props.userid,
         isReply: true,
+        creating: true,
 
         cancelEdit: this.cancelReply,
         doneEditing: this.doneReplying,
@@ -121,6 +122,7 @@ var Comment = React.createClass({
         onEdit: this.onEdit,
         onFlag: this.onFlag,
         onReply: !this.props.isReply && this.onReply,
+        onLogout: this.props.db.logout.bind(this.props.db),
         onRemove: this.onRemove,
         onUpvote: this.onUpvote,
         onDownvote: this.onDownvote,

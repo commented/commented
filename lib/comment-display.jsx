@@ -111,7 +111,7 @@ var CommentDisplay = React.createClass({
   editButtons: function () {
     return <div className="commented_buttons">
       <span onClick={this.doneEditing} className="commented_done-edit button">
-        save
+        {this.props.creating ? 'post' : 'save'}
       </span>
       <span onClick={this.cancelEdit} className="commented_remove button">
         cancel
@@ -182,6 +182,8 @@ var CommentDisplay = React.createClass({
           <span className="display-time">{moment(comment.created).fromNow()}</span>}
         {this.props.parentDeleted &&
           <span className="parent-deleted">in reply to a deleted comment</span>}
+        {this.props.creating &&
+          <button className="commented_logout" onClick={this.props.onLogout}>logout</button>}
         {this.body()}
       </div>
     </div>;

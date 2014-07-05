@@ -4,3 +4,6 @@ main:
 
 watch:
 	watchify -t reactify index.js -o web/commented.js -d
+
+lint:
+	jsxhint -e .jsx lib
