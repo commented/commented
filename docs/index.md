@@ -6,7 +6,7 @@
 > Imagine disqus + medium in an open source library that's both beautiful
 > and easy to use.
 
-<img alt="What I Want" src="/what-i-want.png" style="width: 500px;
+<img alt="What I Want" src="what-i-want.png" style="width: 500px;
 margin-left: 0"/>
 
 ## Features
