@@ -1,0 +1,68 @@
+
+.commented_buttons {
+  position: absolute;
+  bottom: 5px;
+  right: 8px;
+  color: #ccc;
+
+  .count {
+    padding-right: 5px;
+  }
+
+  .shown .count {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .button {
+    // visibility: hidden;
+    opacity: 0;
+    cursor: pointer;
+    padding: 5px;
+    -webkit-transition: opacity .2s, color .2s;
+    color: #ccc;
+
+    &:hover {
+      color: black;
+    }
+
+    .commented_comment--editing &,
+    .commented_comment:hover & {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  .commented_up--active {
+    color: @green;
+  }
+
+  .commented_down--active {
+    color: red;
+  }
+
+  .shown {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .commented_flag--active {
+    color: red;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .commented_edit {
+    &:hover {
+      color: @green;
+    }
+  }
+
+  .commented_remove {
+    &:hover {
+      color: red;
+    }
+  }
+}
+
+

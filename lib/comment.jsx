@@ -96,7 +96,7 @@ var Comment = React.createClass({
           displayName: this.props.user.displayName,
           text: ''
         },
-        onLogout: this.props.db.logout.bind(this.props.db),
+        onLogout: this.onLogout,
         userid: this.props.userid,
         isReply: true,
         creating: true,
@@ -106,6 +106,11 @@ var Comment = React.createClass({
         onRemove: this.cancelReply
       })}
     </div>
+  },
+
+  onLogout: function () {
+    this.setState({replying: false, editing: false})
+    this.props.db.logout()
   },
 
   render: function () {
@@ -125,7 +130,7 @@ var Comment = React.createClass({
         onFlag: this.onFlag,
         onReply: !this.props.isReply && this.onReply,
         cancelReply: this.cancelReply,
-        onLogout: this.props.db.logout.bind(this.props.db),
+        onLogout: this.onLogout,
         onRemove: this.onRemove,
         onUpvote: this.onUpvote,
         onDownvote: this.onDownvote,

@@ -58,70 +58,10 @@
 .commented_reply {
   color: @lightGreen;
   cursor: pointer;
+  -webkit-transition: color .2s;
   margin-left: 5px;
   .commented_comment:hover & {
     color: @green;
-  }
-}
-
-.commented_buttons {
-  position: absolute;
-  bottom: 5px;
-  right: 8px;
-  color: #ccc;
-
-  .count {
-    padding-right: 5px;
-    visibility: hidden;
-    
-  }
-
-  .shown .count {
-    visibility: visible;
-  }
-
-  .button {
-    visibility: hidden;
-    cursor: pointer;
-    padding: 5px;
-
-    &:hover {
-      color: black;
-    }
-
-    .commented_comment--editing &,
-    .commented_comment:hover & {
-      visibility: visible;
-    }
-  }
-
-  .commented_up--active {
-    color: @green;
-  }
-
-  .commented_down--active {
-    color: red;
-  }
-
-  .shown {
-    visibility: visible;
-  }
-
-  .commented_flag--active {
-    color: red;
-    visibility: visible;
-  }
-
-  .commented_edit {
-    &:hover {
-      color: @green;
-    }
-  }
-
-  .commented_remove {
-    &:hover {
-      color: red;
-    }
   }
 }
 
@@ -206,14 +146,13 @@
   cursor: pointer;
   color: #777;
   background-color: white;
-  border: 1px solid white;
-  border-radius: 10px;
+  margin-left: 0;
 
-  -webkit-transition: border-color .2s ease, color .2s;
+  -webkit-transition: margin-left .2s ease, color .2s;
 
   &:hover {
     color: @green;
-    border-color: @lightGreen;
+    margin-left: 10px;
   }
 
   &:before {
@@ -227,23 +166,16 @@
     font-weight: normal;
   }
 
-  /*
-  .plus {
+}
 
-  }
-  .fa-stack {
-    font-size: 24px;
-    color: #aaa;
-    line-height: 32px;
-    margin-left: 8px;
-    margin-right: 10px;
-  }
+.commented_attribution {
+  color: #777;
+  margin-top: 30px;
+  font-size: 14px;
+  text-align: center;
 
-  .text {
-    display: inline-block;
-    margin-top: -8px;
+  a {
+    text-decoration: none;
   }
-  */
-
 }
 

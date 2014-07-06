@@ -131,6 +131,9 @@ var MainComments = React.createClass({
           auth={this.props.auth}
           db={this.props.db}/>
       </div>
+      <div className="commented_attribution">
+        Comments powered by <a target="_blank" href="http://commented.github.io">//commented</a>
+      </div>
     </div>;
   }
 });
