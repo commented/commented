@@ -1,0 +1,10 @@
+site_name: // Commented
+pages:
+- [index.md, Home]
+- [firebase.md, Firebase]
+- [about.md, About]
+theme_dir: docs-theme
+repo_url: https://github.com/commented/commented
+site_author: Jared Forsyth
+site_favicon: favicon.png
+

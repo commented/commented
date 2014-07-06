@@ -2,7 +2,7 @@
 var Commented = require('./lib')
 
 document.addEventListener('DOMContentLoaded', function () {
-  var node = document.getElementById('commented');
+  var node = document.getElementById('commented-main');
   if (!node) {
     console.error('#commented node not found');
     return;
