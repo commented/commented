@@ -14,7 +14,7 @@ margin-left: 0"/>
 - you own your data. *[why is this important?](#own-your-data)*
 - login with twitter, github, google, or facebook
 - comments at the bottom
-- up + down voting, flagging
+- heart a comment, community moderation through flags
 - (soon) inline comments to the side
 
 ## Quickstart
@@ -70,6 +70,7 @@ With // Commented, you have complete control.
 
 ## Roadmap
 
+- implement side commenting
 - put together a [Hood.ie](http://hood.ie) backend
 - syntax highlighting
 - cdnjs submission
