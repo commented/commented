@@ -10,6 +10,7 @@ watch:
 
 docit:
 	browserify -t reactify index.js | uglifyjs > docs-theme/js/commented.min.js
+	lessc index.less | cleancss -o docs-theme/css/commented.min.css
 
 lint:
 	jsxhint -e .jsx lib
