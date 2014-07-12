@@ -1,8 +1,13 @@
 
 var Login = require('./login.jsx')
   , CreateComment = require('./create-comment.jsx')
+  , NoJank = require('./no-jank.js')
 
 var AddComment = React.createClass({
+  // mixins: [SlideDown],
+  slide: {
+    duration: 3
+  },
   propTypes: {
     user: React.PropTypes.object.isRequired,
     autoAdd: React.PropTypes.bool,

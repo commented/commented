@@ -3,17 +3,27 @@ var format = require('./format')
   , AutoTextarea = require('./auto-textarea.jsx')
   , ReplyLogin = require('./reply-login.jsx')
   , cx = React.addons.classSet
+  , SlideDown = require('./slide-down.js')
 
 var CommentDisplay = React.createClass({
+  mixins: [SlideDown],
+  getSlide: function () {
+    return {
+      duration: .3,
+      closeHeight: this.props.isReply ? 0 : 30
+    }
+  },
   propTypes: {
     editing: React.PropTypes.bool.isRequired,
     canEdit: React.PropTypes.bool.isRequired,
     data: React.PropTypes.object.isRequired,
+    creating: React.PropTypes.bool,
     isReply: React.PropTypes.bool,
 
     onEdit: React.PropTypes.func,
     doneEditing: React.PropTypes.func,
     onRemove: React.PropTypes.func,
+    onLogout: React.PropTypes.func,
 
     onReply: React.PropTypes.func,
     onHeart: React.PropTypes.func,
@@ -27,13 +37,29 @@ var CommentDisplay = React.createClass({
     }
   },
 
+  onLogout: function () {
+    this.slideAway(this.props.onLogout)
+  },
+
+  onRemove: function () {
+    this.slideAway(this.props.onRemove)
+  },
+
   cancelEdit: function () {
     this.setState({text: this.props.data.text})
-    this.props.cancelEdit()
+    if (this.props.creating) {
+      this.slideAway(this.props.cancelEdit)
+    } else {
+      this.props.cancelEdit();
+    }
   },
 
   doneEditing: function () {
-    this.props.doneEditing(this.state.text)
+    if (this.props.creating) {
+      this.slideAway(this.props.doneEditing.bind(null, this.state.text))
+    } else {
+      this.props.doneEditing(this.state.text)
+    }
   },
 
   onChange: function (e) {
@@ -124,7 +150,7 @@ var CommentDisplay = React.createClass({
       <span onClick={this.props.onEdit} className="commented_edit button">
         <i className="fa fa-pencil"/>
       </span>
-      <span onClick={this.props.onRemove} className="commented_remove button">
+      <span onClick={this.onRemove} className="commented_remove button">
         <i className="fa fa-times"/>
       </span>
       {!this.props.isReply && <span onClick={this.props.onReply} className="commented_reply">reply</span>}
@@ -180,7 +206,7 @@ var CommentDisplay = React.createClass({
         {this.props.parentDeleted &&
           <span className="parent-deleted">in reply to a deleted comment</span>}
         {this.props.creating &&
-          <button className="commented_logout" onClick={this.props.onLogout}>logout</button>}
+          <button className="commented_logout" onClick={this.onLogout}>logout</button>}
         {this.body()}
       </div>
     </div>;
