@@ -10,7 +10,7 @@ var CommentDisplay = React.createClass({
   getSlide: function () {
     return {
       duration: .3,
-      closeHeight: this.props.isReply ? 0 : 30
+      closeHeight: this.props.creating && !this.props.isReply ? 30 : 0
     }
   },
   propTypes: {
