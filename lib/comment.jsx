@@ -29,16 +29,12 @@ var Comment = React.createClass({
     this.setState({editing: false, replying: true});
   },
 
-  onClearVote: function () {
-    this.props.db.clearVote(this.props.data._id, this.props.userid)
+  onUnHeart: function () {
+    this.props.db.unHeart(this.props.data._id, this.props.userid)
   },
 
-  onDownvote: function (erase) {
-    this.props.db.downVote(this.props.data._id, this.props.userid)
-  },
-
-  onUpvote: function () {
-    this.props.db.upVote(this.props.data._id, this.props.userid)
+  onHeart: function () {
+    this.props.db.heart(this.props.data._id, this.props.userid)
   },
 
   onFlag: function (flag) {
@@ -74,6 +70,7 @@ var Comment = React.createClass({
     }
     var user = this.props.user
     return <div className="commented_replies">
+
       {replies.map(function (comment) {
         return Comment({
           key: comment._id,
@@ -87,6 +84,7 @@ var Comment = React.createClass({
           db: this.props.db,
         })
       }.bind(this))}
+
       {this.state.replying && user && CommentDisplay({
         editing: true,
         canEdit: true,
@@ -132,9 +130,8 @@ var Comment = React.createClass({
         cancelReply: this.cancelReply,
         onLogout: this.onLogout,
         onRemove: this.onRemove,
-        onUpvote: this.onUpvote,
-        onDownvote: this.onDownvote,
-        onClearVote: this.onClearVote,
+        onHeart: this.onHeart,
+        onUnHeart: this.onUnHeart,
         doneEditing: this.doneEditing,
         cancelEdit: this.cancelEdit,
       })}

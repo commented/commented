@@ -33,12 +33,12 @@
     }
   }
 
-  .commented_up--active {
-    color: @green;
-  }
-
-  .commented_down--active {
+  .commented_heart--active {
     color: red;
+
+    &:hover {
+      color: red;
+    }
   }
 
   .shown {
@@ -50,6 +50,10 @@
     color: red;
     opacity: 1;
     visibility: visible;
+
+    &:hover {
+      color: red;
+    }
   }
 
   .commented_edit {

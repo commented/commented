@@ -16,9 +16,8 @@ var CommentDisplay = React.createClass({
     onRemove: React.PropTypes.func,
 
     onReply: React.PropTypes.func,
-    onUpvote: React.PropTypes.func,
-    onDownvote: React.PropTypes.func,
-    onClearVote: React.PropTypes.func,
+    onHeart: React.PropTypes.func,
+    onUnHeart: React.PropTypes.func,
     onFlag: React.PropTypes.func,
   },
 
@@ -43,27 +42,17 @@ var CommentDisplay = React.createClass({
 
   getVotes: function () {
     var votes = {
-      up: false,
-      upCount: 0,
-      down: false,
-      downCount: 0,
+      heart: false,
+      heartCount: 0,
       flagged: this.props.data.flags && this.props.data.flags[this.props.userid],
       flagCount: 0
     }
 
-    switch (this.props.data.votes && this.props.data.votes[this.props.userid]) {
-      case true:
-        votes.up = true; break;
-      case false:
-        votes.down = true; break;
-      default: break;
+    if (this.props.data.votes && this.props.data.votes[this.props.userid]) {
+      votes.heart = true
     }
     for (var id in this.props.data.votes) {
-      if (this.props.data.votes[id]) {
-        votes.upCount += 1
-      } else {
-        votes.downCount += 1
-      }
+      votes.heartCount += 1
     }
     for (var id in this.props.data.flags) {
       if (this.props.data.flags[id]) {
@@ -86,24 +75,14 @@ var CommentDisplay = React.createClass({
         <i className="fa fa-flag"/>
       </span>
       <span
-        onClick={votes.down ? this.props.onClearVote : this.props.onDownvote}
+        onClick={votes.heart ? this.props.onUnHeart : this.props.onHeart}
         className={cx({
-          "button commented_down": true,
-          "commented_down--shown shown": !!votes.downCount,
-          "commented_down--active active": votes.down
+          "button commented_heart": true,
+          "commented_heart--shown shown": !!votes.heartCount,
+          "commented_heart--active active": votes.heart
         })}>
-        <span className="count">{votes.downCount}</span>
-        <i className="fa fa-thumbs-o-down"/>
-      </span>
-      <span
-        onClick={votes.up ? this.props.onClearVote : this.props.onUpvote}
-        className={cx({
-          "button commented_up": true,
-          "commented_up--shown shown": !!votes.upCount,
-          "commented_up--active active": votes.up
-        })}>
-        <span className="count">{votes.upCount}</span>
-        <i className="fa fa-thumbs-o-up"/>
+        <span className="count">{votes.heartCount}</span>
+        <i className="fa fa-heart"/>
       </span>
       {!this.props.isReply && <span onClick={this.props.onReply} className="commented_reply">reply</span>}
     </div>;
