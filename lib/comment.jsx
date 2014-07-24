@@ -1,3 +1,4 @@
+/** @jsx React.DOM */
 
 var CommentDisplay = require('./comment-display.jsx')
 
@@ -120,7 +121,10 @@ var Comment = React.createClass({
         data: this.props.data,
         db: this.props.db,
         isReply: this.props.isReply,
-        hasReplies: (this.props.userid && this.state.replying) || this.props.replies && this.props.replies.length,
+        hasReplies: (this.props.userid &&
+                     this.state.replying) ||
+                     this.props.replies &&
+                     this.props.replies.length,
         userid: this.props.userid,
         parentDeleted: this.props.parentDeleted,
 

@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/commented/commented",
   "dependencies": {
+    "es6ify": "^1.2.0",
     "hellojs": "^0.2.5",
     "reactify": "^0.13.1"
   }
