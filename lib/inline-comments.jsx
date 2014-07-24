@@ -41,10 +41,14 @@ var InlineComments = React.createClass({
     }
     while (node) {
       if (node === me) return
-      if (node.classList &&
-          node.classList.contains('commented_inline')) {
-        isComment = true
-        break;
+      if (node.classList) {
+        if (node.classList.contains('commented_login-type')) {
+          return
+        }
+        if (node.classList.contains('commented_inline')) {
+          isComment = true
+          break;
+        }
       }
       node = node.parentNode
     }
