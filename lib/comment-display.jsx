@@ -60,6 +60,7 @@ var CommentDisplay = React.createClass({
   },
 
   doneEditing: function () {
+    if (!this.state.text) return
     if (this.props.creating) {
       this.slideAway(this.props.doneEditing.bind(null, this.state.text))
     } else {

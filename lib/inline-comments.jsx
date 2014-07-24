@@ -22,11 +22,11 @@ var InlineComments = React.createClass({
   },
 
   componentDidMount: function () {
-    document.addEventListener('mousedown', this.docMouseDown);
+    document.addEventListener('click', this.docMouseDown);
   },
 
   componentWillUnmount: function () {
-    document.removeEventListener('mousedown', this.docMouseDown);
+    document.removeEventListener('click', this.docMouseDown);
   },
 
   docMouseDown: function (e) {
@@ -77,7 +77,7 @@ var InlineComments = React.createClass({
       'commented_inline--empty': !hasComments,
       'commented_inline--showing': this.state.showing
     })}>
-      <div className="commented_inline_flag" onMouseDown={this.onShow}>
+      <div className="commented_inline_flag" onClick={this.onShow}>
         {hasComments || '+'}
       </div>
       {this.state.showing && ViewComments({

@@ -1,5 +1,4 @@
 
-var AutoTextarea = require('./auto-textarea.jsx')
 var CommentDisplay = require('./comment-display.jsx')
 var PT = React.PropTypes
 
