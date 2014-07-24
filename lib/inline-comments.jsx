@@ -50,6 +50,10 @@ var InlineComments = React.createClass({
           break;
         }
       }
+      if (!node.parentNode && node !== document) {
+        // node disappeared
+        return;
+      }
       node = node.parentNode
     }
     if (!isComment) {
@@ -79,13 +83,17 @@ var InlineComments = React.createClass({
   render: function () {
     var comments = this.organizeComments();
     var hasComments = comments && comments.list.length
+    var count = 0;
+    comments ? comments.list.forEach(function (item) {
+      count += 1 + item.replies.length
+    }) : null;
     return <div className={cx({
       "commented_inline": true,
       'commented_inline--empty': !hasComments,
       'commented_inline--showing': this.state.showing
     })}>
       <div className="commented_inline_flag" onClick={this.onShow}>
-        {hasComments || '+'}
+        {count || '+'}
       </div>
       {this.state.showing && ViewComments({
         comments: comments,

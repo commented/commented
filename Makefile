@@ -16,7 +16,7 @@ lint:
 	jsxhint -e .jsx lib
 
 serve-web:
-	@cd web; python -m SimpleHTTPServer 7000
+	@cd web; python -m SimpleHTTPServer 3000
 
 serve:
 	@deactivate; . ~/.virtualenv/other/bin/activate; mkdocs serve --dev-addr=0.0.0.0:5001

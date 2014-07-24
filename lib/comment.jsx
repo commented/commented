@@ -20,7 +20,11 @@ var Comment = React.createClass({
     this.props.db.removeComment(this.props.data._id)
   },
 
-  onEdit: function () {
+  onEdit: function (e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     this.setState({editing: true})
   },
 
