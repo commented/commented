@@ -36,6 +36,9 @@ var InlineComments = React.createClass({
     var isComment = false
       , node = e.target
       , me = this.getDOMNode()
+    if (node.classList.contains('add-comment')) {
+      return
+    }
     while (node) {
       if (node === me) return
       if (node.classList &&

@@ -20,7 +20,7 @@ var CreateComment = React.createClass({
   _onSubmit: function (text) {
     if (!text) return
     this.props.db.addComment(text, this.props.target, false)
-    this.props.onHide()
+    this.props.onHide && this.props.onHide()
   },
 
   render: function () {
