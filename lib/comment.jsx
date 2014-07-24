@@ -1,12 +1,11 @@
-/** @jsx React.DOM */
 
 var CommentDisplay = require('./comment-display.jsx')
 
 var Comment = React.createClass({
   propTypes: {
     data: React.PropTypes.object.isRequired,
-    canEdit: React.PropTypes.bool.isRequired,
-    userid: React.PropTypes.string.isRequired,
+    canEdit: React.PropTypes.bool,
+    userid: React.PropTypes.string,
     db: React.PropTypes.object,
   },
 

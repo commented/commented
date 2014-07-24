@@ -1,6 +1,8 @@
 
 var PT = React.PropTypes
   , mixing = require('./mixin')
+  , ViewComments = require('./view-comments.jsx')
+  , cx = React.addons.classSet
 
 function isDescendent(child, parent) {
   while (child) {
@@ -31,11 +33,22 @@ var InlineComments = React.createClass({
     if (!this.state.showing) {
       return
     }
-    if (isDescendent(e.target, this.getDOMNode())) {
-      return
+    var isComment = false
+      , node = e.target
+      , me = this.getDOMNode()
+    while (node) {
+      if (node === me) return
+      if (node.classList &&
+          node.classList.contains('commented_inline')) {
+        isComment = true
+        break;
+      }
+      node = node.parentNode
+    }
+    if (!isComment) {
+      this.props.body.classList.remove('commented_inline-body--shifted')
     }
     this.setState({showing: false})
-    this.props.body.classList.remove('commented_inline-body--shifted')
   },
 
   componentDidUpdate: function () {
@@ -45,21 +58,36 @@ var InlineComments = React.createClass({
   },
 
   onShow: function () {
+    if (this.state.showing) {
+      return this.onHide()
+    }
     this.setState({showing: true});
+  },
+
+  onHide: function () {
+    this.props.body.classList.remove('commented_inline-body--shifted')
+    this.setState({showing: false});
   },
 
   render: function () {
     var comments = this.organizeComments();
-    return <div className="commented_inline">
-      <div className="commented_inline_flag" onClick={this.onShow}>
-        {comments.list.length || '&times;'}
+    var hasComments = comments && comments.list.length
+    return <div className={cx({
+      "commented_inline": true,
+      'commented_inline--empty': !hasComments,
+      'commented_inline--showing': this.state.showing
+    })}>
+      <div className="commented_inline_flag" onMouseDown={this.onShow}>
+        {hasComments || '+'}
       </div>
       {this.state.showing && ViewComments({
         comments: comments,
         db: this.props.db,
+        user: this.state.user,
+        loading: this.state.loading,
         auth: this.props.auth,
         target: this.props.target,
-        startAdding: !comments.list.length
+        startAdding: !hasComments,
       })}
     </div>;
   }

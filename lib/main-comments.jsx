@@ -18,6 +18,8 @@ var MainComments = React.createClass({
   render: function () {
     return ViewComments({
       comments: this.organizeComments(),
+      loading: this.state.loading,
+      user: this.state.user,
       db: this.props.db,
       auth: this.props.auth,
       target: 'main'

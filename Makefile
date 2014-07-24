@@ -1,12 +1,12 @@
 
 main:
-	browserify -t reactify -t es6ify index.js -o web/commented.js -d
+	browserify -t [ reactify --es6 ] -t es6ify index.js -o web/commented.js -d
 
 less:
 	lessc index.less web/build.css
 
 watch:
-	watchify -t reactify -t es6ify index.js -o web/commented.js -d -v
+	watchify -t [ reactify --es6 ] -t es6ify index.js -o web/commented.js -d -v
 
 docit:
 	browserify -t reactify -t es6ify index.js | uglifyjs > docs-theme/js/commented.min.js

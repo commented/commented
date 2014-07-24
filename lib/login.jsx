@@ -56,9 +56,9 @@ var Login = React.createClass({
           </span>
         </button>;
       }.bind(this))}
-      <button className="commented_login-type commente_login-type--cancel"
-        onClick={this.props.onCancel}>&times;
-      </button>
+      {this.props.onCancel && <button className="commented_login-type commente_login-type--cancel"
+          onClick={this.props.onCancel}>&times;
+        </button>}
     </div>;
   }
 });

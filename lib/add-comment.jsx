@@ -9,8 +9,9 @@ var AddComment = React.createClass({
     duration: 3
   },
   propTypes: {
-    user: React.PropTypes.object.isRequired,
+    user: React.PropTypes.object,
     autoAdd: React.PropTypes.bool,
+    noCancel: React.PropTypes.bool,
   },
   getInitialState: function () {
     return {
@@ -30,10 +31,10 @@ var AddComment = React.createClass({
       </div>
     }
     if (!this.props.user) {
-      return <Login db={this.props.db} auth={this.props.auth} onCancel={this.onHide}/>
+      return <Login db={this.props.db} auth={this.props.auth} onCancel={!this.props.noCancel && this.onHide}/>
     }
     return <CreateComment
-      onHide={this.onHide}
+      onHide={!this.props.noCancel && this.onHide}
       target={this.props.target}
       db={this.props.db}
       user={this.props.user}/>

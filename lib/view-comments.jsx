@@ -10,29 +10,13 @@ var ViewComments = React.createClass({
     db: React.PropTypes.object.isRequired,
     auth: React.PropTypes.array.isRequired,
     target: React.PropTypes.string.isRequired,
-    startAdding: React.PropTypes.bool
+    startAdding: React.PropTypes.bool,
   },
 
   getInitialState: function () {
     return {
       showAll: false,
-      loading: !this.props.db.loaded
     }
-  },
-
-  componentDidMount: function () {
-    this.props.db.onLogin(this._onLogin)
-    if (!this.props.db.loaded) {
-      this.props.db.onceLoaded(this._onLoaded)
-    }
-  },
-
-  componentWillUnmount: function () {
-    this.props.db.offLogin(this._onLogin)
-  },
-
-  _onLoaded: function () {
-    this.setState({loading: false})
   },
 
   _onChangeShow: function (which) {
@@ -41,14 +25,9 @@ var ViewComments = React.createClass({
     })
   },
 
-
-  _onLogin: function (user) {
-    this.setState({user: user})
-  },
-
   renderComments: function () {
     if (!this.props.comments) {
-      if (this.state.loading) {
+      if (this.props.loading) {
         return <span>
             <i className="fa fa-spin fa-spinner"/>
             {' '}Loading...
@@ -58,7 +37,7 @@ var ViewComments = React.createClass({
     }
 
     var organized = this.props.comments
-    var user = this.state.user
+    var user = this.props.user
     var db = this.props.db
     var isMain = this.props.target === 'main'
 
@@ -92,14 +71,16 @@ var ViewComments = React.createClass({
       <div className="commented_add">
         <AddComment
           autoAdd={this.props.startAdding}
+          noCancel={this.props.startAdding}
           target={this.props.target}
-          user={this.state.user}
+          user={this.props.user}
           auth={this.props.auth}
           db={this.props.db}/>
       </div>
-      <div className="commented_attribution">
-        Comments powered by <a target="_blank" href="http://commented.github.io">//commented</a>
-      </div>
+      {this.props.target === 'main' &&
+        <div className="commented_attribution">
+          Comments powered by <a target="_blank" href="http://commented.github.io">//commented</a>
+        </div>}
     </div>;
   }
 });

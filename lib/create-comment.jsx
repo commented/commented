@@ -1,10 +1,13 @@
 
 var AutoTextarea = require('./auto-textarea.jsx')
 var CommentDisplay = require('./comment-display.jsx')
+var PT = React.PropTypes
 
 var CreateComment = React.createClass({
   propTypes: {
-    onHide: React.PropTypes.func.isRequired,
+    onHide: React.PropTypes.oneOfType([
+        PT.bool, PT.func
+    ]),
     target: React.PropTypes.string.isRequired,
     db: React.PropTypes.object.isRequired,
     user: React.PropTypes.object.isRequired

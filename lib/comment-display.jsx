@@ -4,6 +4,7 @@ var format = require('./format')
   , ReplyLogin = require('./reply-login.jsx')
   , cx = React.addons.classSet
   , SlideDown = require('./slide-down.js')
+  , PT = React.PropTypes
 
 var CommentDisplay = React.createClass({
   mixins: [SlideDown],
@@ -15,17 +16,21 @@ var CommentDisplay = React.createClass({
   },
   propTypes: {
     editing: React.PropTypes.bool.isRequired,
-    canEdit: React.PropTypes.bool.isRequired,
+    canEdit: React.PropTypes.bool,
     data: React.PropTypes.object.isRequired,
     creating: React.PropTypes.bool,
     isReply: React.PropTypes.bool,
 
     onEdit: React.PropTypes.func,
     doneEditing: React.PropTypes.func,
-    onRemove: React.PropTypes.func,
+    onRemove: React.PropTypes.oneOfType([
+      PT.bool, PT.func
+    ]),
     onLogout: React.PropTypes.func,
 
-    onReply: React.PropTypes.func,
+    onReply: PT.oneOfType([
+      PT.bool, PT.func
+    ]),
     onHeart: React.PropTypes.func,
     onUnHeart: React.PropTypes.func,
     onFlag: React.PropTypes.func,
@@ -119,9 +124,10 @@ var CommentDisplay = React.createClass({
       <span onClick={this.doneEditing} className="commented_done-edit button">
         {this.props.creating ? 'post' : 'save'}
       </span>
-      <span onClick={this.cancelEdit} className="commented_remove button">
-        cancel
-      </span>
+      {this.props.cancelEdit &&
+        <span onClick={this.cancelEdit} className="commented_remove button">
+            cancel
+        </span>}
     </div>
   },
 

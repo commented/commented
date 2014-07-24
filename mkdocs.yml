@@ -6,5 +6,5 @@ pages:
 theme_dir: docs-theme
 repo_url: https://github.com/commented/commented
 site_author: Jared Forsyth
-site_favicon: favicon.png
+site_favicon: commented-icon_sm.png
 
