@@ -21,4 +21,7 @@ serve-web:
 serve:
 	@deactivate; . ~/.virtualenv/other/bin/activate; mkdocs serve --dev-addr=0.0.0.0:5001
 
+build-docs:
+	@deactivate; . ~/.virtualenv/other/bin/activate; mkdocs build
+
 .PHONY: less main watch lint

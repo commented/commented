@@ -15,7 +15,7 @@ margin-left: 0"/>
 - login with twitter, github, google, or facebook
 - comments at the bottom
 - heart a comment, community moderation through flags
-- (soon) inline comments to the side
+- inline comments to the side
 
 ## Quickstart
 
@@ -70,8 +70,8 @@ With // Commented, you have complete control.
 
 ## Roadmap
 
-- implement side commenting
 - put together a [Hood.ie](http://hood.ie) backend
+- "select to quote" as on medium
 - syntax highlighting
 - cdnjs submission
 - Admin tools for moderation, banning, etc.
