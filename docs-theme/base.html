@@ -45,9 +45,10 @@
 
         <div class="container">
             <div class="col-md-3">{% include "toc.html" %}</div>
-            <div class="col-md-9" role="main">
+            <div class="col-md-9" role="main" id="main">
                 {% include "content.html" %}
                 <div data-firebase="now-commenting"
+                    data-inline="#main"
                     data-auth="facebook google twitter github" 
                     id="commented-main"></div>
             </div>
